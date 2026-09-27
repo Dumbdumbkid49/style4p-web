@@ -1,0 +1,194 @@
+// =============================================================================
+// Style4P: Prisma Schema
+// PostgreSQL Relational Database Schema for Personal Digital Closet Platform
+// =============================================================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// -----------------------------------------------------------------------------
+// ENUMS
+// -----------------------------------------------------------------------------
+
+enum ClothingCategory {
+  TOP
+  BOTTOM
+  OUTERWEAR
+  SHOES
+  ACCESSORY
+}
+
+enum FashionStyle {
+  CASUAL
+  STREETWEAR
+  MINIMAL
+  VINTAGE
+  Y2K
+  FORMAL
+  SPORT
+  OTHER
+}
+
+enum Season {
+  ALL_SEASON
+  SUMMER
+  WINTER
+  SPRING_FALL
+  RAINY
+}
+
+enum Occasion {
+  CASUAL
+  CAFE
+  UNIVERSITY
+  SCHOOL
+  PARTY
+  FORMAL
+  SPORT
+}
+
+enum WeatherCondition {
+  HOT
+  WARM
+  RAINY
+  COLD
+}
+
+enum FeedbackAction {
+  LIKE
+  SKIP
+}
+
+// -----------------------------------------------------------------------------
+// MODELS
+// -----------------------------------------------------------------------------
+
+model User {
+  id            String    @id @default(cuid())
+  name          String
+  email         String    @unique
+  passwordHash  String?   @map("password_hash")
+  profileImage  String?   @map("profile_image")
+  bio           String?
+  createdAt     DateTime  @default(now()) @map("created_at")
+  updatedAt     DateTime  @updatedAt @map("updated_at")
+
+  // Relations
+  clothingItems ClothingItem[]
+  outfits       Outfit[]
+  wearLogs      WearLog[]
+  feedbacks     OutfitFeedback[]
+
+  @@map("users")
+}
+
+model ClothingItem {
+  id          String           @id @default(cuid())
+  userId      String           @map("user_id")
+  name        String
+  category    ClothingCategory
+  color       String
+  style       FashionStyle     @default(CASUAL)
+  season      Season           @default(ALL_SEASON)
+  imageUrl    String           @map("image_url")
+  wearCount   Int              @default(0) @map("wear_count")
+  lastWorn    DateTime?        @map("last_worn")
+  isFavorite  Boolean          @default(false) @map("is_favorite")
+  createdAt   DateTime         @default(now()) @map("created_at")
+  updatedAt   DateTime         @updatedAt @map("updated_at")
+
+  // Relations
+  user        User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  outfitItems OutfitItem[]
+
+  @@index([userId])
+  @@index([category])
+  @@index([style])
+  @@index([lastWorn])
+  @@map("clothing_items")
+}
+
+model Outfit {
+  id              String            @id @default(cuid())
+  userId          String            @map("user_id")
+  name            String
+  style           FashionStyle      @default(CASUAL)
+  occasion        Occasion          @default(CASUAL)
+  weather         WeatherCondition? @default(WARM)
+  matchScore      Int               @default(80) @map("match_score")
+  scoreBreakdown  Json?             @map("score_breakdown") // { color: 90, style: 85, category: 100, occasion: 90, weather: 80 }
+  wearCount       Int               @default(0) @map("wear_count")
+  lastWorn        DateTime?         @map("last_worn")
+  isFavorite      Boolean           @default(false) @map("is_favorite")
+  createdAt       DateTime          @default(now()) @map("created_at")
+  updatedAt       DateTime          @updatedAt @map("updated_at")
+
+  // Relations
+  user            User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  items           OutfitItem[]
+  wearLogs        WearLog[]
+  feedbacks       OutfitFeedback[]
+
+  @@index([userId])
+  @@index([style])
+  @@index([matchScore])
+  @@map("outfits")
+}
+
+model OutfitItem {
+  id              String           @id @default(cuid())
+  outfitId        String           @map("outfit_id")
+  clothingItemId  String           @map("clothing_item_id")
+  slotCategory    ClothingCategory @map("slot_category")
+  createdAt       DateTime         @default(now()) @map("created_at")
+
+  // Relations
+  outfit          Outfit           @relation(fields: [outfitId], references: [id], onDelete: Cascade)
+  clothingItem    ClothingItem     @relation(fields: [clothingItemId], references: [id], onDelete: Cascade)
+
+  @@unique([outfitId, clothingItemId])
+  @@index([outfitId])
+  @@index([clothingItemId])
+  @@map("outfit_items")
+}
+
+model WearLog {
+  id          String    @id @default(cuid())
+  userId      String    @map("user_id")
+  outfitId    String    @map("outfit_id")
+  occasion    Occasion  @default(CASUAL)
+  notes       String?
+  wornAt      DateTime  @default(now()) @map("worn_at")
+  createdAt   DateTime  @default(now()) @map("created_at")
+
+  // Relations
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  outfit      Outfit    @relation(fields: [outfitId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([outfitId])
+  @@index([wornAt])
+  @@map("wear_logs")
+}
+
+model OutfitFeedback {
+  id          String         @id @default(cuid())
+  userId      String         @map("user_id")
+  outfitId    String         @map("outfit_id")
+  action      FeedbackAction
+  createdAt   DateTime       @default(now()) @map("created_at")
+
+  // Relations
+  user        User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  outfit      Outfit         @relation(fields: [outfitId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([outfitId])
+  @@map("outfit_feedback")
+}

@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Style4P — Personal Digital Closet & Outfit Discovery Platform</title>
+  <meta name="description" content="Discover new outfits from what you already own. Digital Closet, Smart Outfit Discovery, Remix Engine, Wear Tracking, and Wardrobe Analytics.">
+  
+  <!-- Modern Fashion Typography: Outfit & Plus Jakarta Sans & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div id="app-container">
+    <!-- Sidebar Navigation -->
+    <aside class="app-sidebar" id="app-sidebar">
+      <div class="brand-section">
+        <div class="brand-logo-icon">4P</div>
+        <div class="brand-info">
+          <span class="brand-title">Style4P</span>
+          <span class="brand-badge">Digital Closet</span>
+        </div>
+      </div>
+
+      <ul class="nav-menu">
+        <li>
+          <a class="nav-link active" data-view="home" id="nav-home">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+            <span>Home</span>
+          </a>
+        </li>
+        <li>
+          <a class="nav-link" data-view="closet" id="nav-closet">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/></svg>
+            <span>My Closet</span>
+            <span class="nav-badge" id="nav-closet-count">0</span>
+          </a>
+        </li>
+        <li>
+          <a class="nav-link" data-view="discover" id="nav-discover">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+            <span>Discover</span>
+            <span class="nav-badge" style="background: rgba(200, 245, 96, 0.15); color: var(--accent-secondary);">New</span>
+          </a>
+        </li>
+        <li>
+          <a class="nav-link" data-view="remix" id="nav-remix">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+            <span>Outfit Remix</span>
+          </a>
+        </li>
+        <li>
+          <a class="nav-link" data-view="forgotten" id="nav-forgotten">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            <span>Forgotten Items</span>
+            <span class="nav-badge" id="nav-forgotten-count" style="background: rgba(244, 63, 94, 0.15); color: #ff758c;">0</span>
+          </a>
+        </li>
+        <li>
+          <a class="nav-link" data-view="history" id="nav-history">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+            <span>Wear History</span>
+          </a>
+        </li>
+        <li>
+          <a class="nav-link" data-view="analytics" id="nav-analytics">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+            <span>Closet Analytics</span>
+          </a>
+        </li>
+      </ul>
+
+      <div class="sidebar-footer">
+        <button class="user-profile-btn" id="btn-user-profile">
+          <img src="" alt="Alex Morgan" class="user-avatar" id="sidebar-user-avatar">
+          <div class="user-details">
+            <span class="user-name" id="sidebar-user-name">Alex Morgan</span>
+            <span class="user-email" id="sidebar-user-email">alex.morgan@style4p.io</span>
+          </div>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="app-main">
+      <!-- Topbar Header -->
+      <header class="app-topbar">
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <button class="mobile-nav-toggle" id="btn-mobile-nav" aria-label="Toggle menu">
+            <svg width="24" height="24" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+          </button>
+          <span class="topbar-tagline">OWN • EXPLORE • REMIX • WEAR MORE</span>
+        </div>
+
+        <div class="topbar-actions">
+          <button class="btn btn-primary btn-sm" id="btn-quick-add-clothing">
+            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+            <span>Add Clothing</span>
+          </button>
+          <button class="theme-toggle-btn" id="btn-theme-toggle" title="Toggle theme">
+            <svg id="theme-icon" width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- ========================================== -->
+      <!-- VIEW 1: HOME / DASHBOARD                   -->
+      <!-- ========================================== -->
+      <section class="page-view active" id="view-home">
+        <!-- Hero Greeting Banner -->
+        <div class="hero-greeting">
+          <div class="hero-subtitle">Personal Digital Closet & Discovery</div>
+          <h1 class="hero-title" id="home-greeting-heading">GOOD MORNING, ALEX</h1>
+          <p class="hero-quote">
+            What are you wearing today? <strong>You don't need more clothes. You need more ways to wear them.</strong>
+          </p>
+          <div class="hero-actions">
+            <button class="btn btn-primary btn-lg" id="home-cta-discover">
+              <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+              <span>DISCOVER AN OUTFIT</span>
+            </button>
+            <button class="btn btn-secondary btn-lg" id="home-cta-closet">
+              <span>View My Closet</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Stats Ribbon -->
+        <div class="stats-ribbon">
+          <div class="stat-item-card">
+            <div class="stat-icon-wrapper" style="color: var(--accent-primary);">👕</div>
+            <div>
+              <div class="stat-metric-value" id="home-stat-items">24</div>
+              <div class="stat-metric-label">Items in Closet</div>
+            </div>
+          </div>
+          <div class="stat-item-card">
+            <div class="stat-icon-wrapper" style="color: var(--accent-secondary);">✨</div>
+            <div>
+              <div class="stat-metric-value" id="home-stat-outfits">18</div>
+              <div class="stat-metric-label">Curated Outfits</div>
+            </div>
+          </div>
+          <div class="stat-item-card">
+            <div class="stat-icon-wrapper" style="color: var(--accent-blue);">🔄</div>
+            <div>
+              <div class="stat-metric-value" id="home-stat-rotation">72%</div>
+              <div class="stat-metric-label">Rotation Rate</div>
+            </div>
+          </div>
+          <div class="stat-item-card">
+            <div class="stat-icon-wrapper" style="color: var(--accent-gold);">⚡</div>
+            <div>
+              <div class="stat-metric-value" id="home-stat-combos">450+</div>
+              <div class="stat-metric-label">Outfit Potential</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Forgotten Item Spotlight Card -->
+        <div class="forgotten-spotlight" id="home-forgotten-spotlight">
+          <div class="forgotten-spotlight-left">
+            <img src="" alt="Forgotten Item" class="forgotten-thumbnail" id="home-forgotten-img">
+            <div>
+              <span class="forgotten-tag-badge">Forgotten Item Spotlight</span>
+              <h3 class="forgotten-title" id="home-forgotten-name">Caramel Brown Suede Overshirt</h3>
+              <p class="forgotten-meta">
+                Last worn <span id="home-forgotten-days">42 days ago</span> • Wear count: <strong id="home-forgotten-wears">1</strong>
+              </p>
+            </div>
+          </div>
+          <button class="btn btn-lime" id="home-forgotten-remix-btn">
+            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+            <span>REMIX IT</span>
+          </button>
+        </div>
+
+        <!-- Recent Outfits Section -->
+        <div class="section-header">
+          <div>
+            <span class="section-pretitle">Your Style Rotation</span>
+            <h2 class="section-title">Recent Outfits</h2>
+          </div>
+          <button class="btn btn-ghost btn-sm" id="btn-see-all-outfits">
+            <span>Explore Discovery →</span>
+          </button>
+        </div>
+
+        <div class="outfit-shelf-grid" id="home-recent-outfits-grid">
+          <!-- Dynamically populated -->
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- VIEW 2: DIGITAL CLOSET                     -->
+      <!-- ========================================== -->
+      <section class="page-view" id="view-closet">
+        <div class="section-header">
+          <div>
+            <span class="section-pretitle">Inventory & Potential</span>
+            <h2 class="section-title">My Digital Closet</h2>
+            <p class="section-desc">Manage your clothes, inspect match potential, and track how often you wear each piece.</p>
+          </div>
+          <button class="btn btn-primary" id="btn-closet-add-item">
+            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+            <span>+ Add Clothing</span>
+          </button>
+        </div>
+
+        <!-- Closet Toolbar -->
+        <div class="closet-toolbar">
+          <div class="closet-search-row">
+            <div class="search-input-wrapper">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+              <input type="text" class="search-input" id="closet-search-input" placeholder="Search by name, color, style...">
+            </div>
+            <div class="filter-dropdowns-row">
+              <select class="filter-select" id="filter-style-select">
+                <option value="ALL">All Styles</option>
+                <option value="Streetwear">Streetwear</option>
+                <option value="Minimal">Minimal</option>
+                <option value="Casual">Casual</option>
+                <option value="Vintage">Vintage</option>
+                <option value="Y2K">Y2K</option>
+                <option value="Formal">Formal</option>
+                <option value="Sport">Sport</option>
+              </select>
+              <select class="filter-select" id="filter-color-select">
+                <option value="ALL">All Colors</option>
+                <option value="Black">Black</option>
+                <option value="White">White</option>
+                <option value="Blue">Blue</option>
+                <option value="Beige">Beige</option>
+                <option value="Olive">Olive</option>
+                <option value="Gray">Gray</option>
+                <option value="Brown">Brown</option>
+              </select>
+              <select class="filter-select" id="filter-season-select">
+                <option value="ALL">All Seasons</option>
+                <option value="All Season">All Season</option>
+                <option value="Summer">Summer</option>
+                <option value="Winter">Winter</option>
+                <option value="Spring/Fall">Spring/Fall</option>
+                <option value="Rainy">Rainy</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Category filter tabs -->
+          <div class="category-tabs-scroll" id="closet-category-tabs">
+            <button class="category-tab-btn active" data-cat="ALL">All Items (<span id="cat-count-all">0</span>)</button>
+            <button class="category-tab-btn" data-cat="Top">Tops (<span id="cat-count-top">0</span>)</button>
+            <button class="category-tab-btn" data-cat="Bottom">Bottoms (<span id="cat-count-bot">0</span>)</button>
+            <button class="category-tab-btn" data-cat="Outerwear">Outerwear (<span id="cat-count-out">0</span>)</button>
+            <button class="category-tab-btn" data-cat="Shoes">Shoes (<span id="cat-count-shoe">0</span>)</button>
+            <button class="category-tab-btn" data-cat="Accessory">Accessories (<span id="cat-count-acc">0</span>)</button>
+          </div>
+        </div>
+
+        <!-- Clothing Grid -->
+        <div class="clothing-grid" id="closet-items-grid">
+          <!-- Dynamically populated -->
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- VIEW 3: OUTFIT DISCOVERY (HERO FEATURE)    -->
+      <!-- ========================================== -->
+      <section class="page-view" id="view-discover">
+        <div class="section-header">
+          <div>
+            <span class="section-pretitle">Smart Rule Engine</span>
+            <h2 class="section-title">Outfit Discovery</h2>
+            <p class="section-desc">Generate fresh outfit candidates strictly from the pieces you already own.</p>
+          </div>
+          <button class="btn btn-secondary" id="btn-shuffle-discovery">
+            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+            <span>Shuffle Candidates</span>
+          </button>
+        </div>
+
+        <!-- Context Filter Bar -->
+        <div class="discovery-context-bar">
+          <div class="context-selectors">
+            <div class="context-group">
+              <span class="context-label">Occasion:</span>
+              <select class="filter-select" id="discover-occasion-select">
+                <option value="Casual">Casual / Daily</option>
+                <option value="Cafe" selected>Cafe / Coffee Run</option>
+                <option value="University">University / Campus</option>
+                <option value="School">School</option>
+                <option value="Party">Party / Night Out</option>
+                <option value="Formal">Formal / Sartorial</option>
+                <option value="Sport">Sport / Active</option>
+              </select>
+            </div>
+            <div class="context-group">
+              <span class="context-label">Weather:</span>
+              <select class="filter-select" id="discover-weather-select">
+                <option value="Hot">Hot (32°C+)</option>
+                <option value="Warm" selected>Warm (24°C - 28°C)</option>
+                <option value="Rainy">Rainy / Overcast</option>
+                <option value="Cold">Cold / Chilly</option>
+              </select>
+            </div>
+          </div>
+          <div id="seed-filter-indicator" style="display: none; align-items: center; gap: 0.5rem;">
+            <span class="tag-chip accent" id="seed-item-tag">Seeded with Forgotten Item</span>
+            <button class="btn btn-ghost btn-sm" id="btn-clear-seed" title="Clear seed lock">✕ Clear</button>
+          </div>
+        </div>
+
+        <!-- Discovery Stage -->
+        <div class="discovery-stage">
+          <!-- Main Deck / Card -->
+          <div class="outfit-stage-card" id="outfit-active-card">
+            <div class="outfit-stage-header">
+              <div class="outfit-stage-title-wrap">
+                <div class="outfit-stage-tags">
+                  <span class="tag-chip accent" id="active-outfit-style">Streetwear</span>
+                  <span class="tag-chip" id="active-outfit-occasion">Cafe</span>
+                </div>
+                <h3 class="outfit-stage-name" id="active-outfit-name">Downtown Monochrome Uniform</h3>
+              </div>
+
+              <!-- Large Match Score Badge -->
+              <div class="match-score-badge-large" id="btn-show-score-breakdown" title="Click to view score breakdown">
+                <span class="match-score-num" id="active-outfit-score">92</span>
+                <span class="match-score-lbl">Match</span>
+              </div>
+            </div>
+
+            <!-- Items Deck Gallery -->
+            <div class="outfit-items-gallery-deck" id="active-outfit-items-gallery">
+              <!-- Dynamically populated with items -->
+            </div>
+
+            <!-- Interactive Discovery Controls -->
+            <div class="discovery-controls-bar">
+              <button class="ctrl-btn ctrl-skip" id="btn-discovery-skip" title="Skip outfit">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                <span>Skip</span>
+              </button>
+              <button class="ctrl-btn ctrl-remix" id="btn-discovery-remix" title="Open in Remix Studio">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+                <span>Remix</span>
+              </button>
+              <button class="ctrl-btn ctrl-wore" id="btn-discovery-wear" title="Record that you wore this look">
+                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                <span>I Wore This</span>
+              </button>
+              <button class="ctrl-btn ctrl-like" id="btn-discovery-like" title="Like and save to favorites">
+                <svg fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+                <span>Like</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Score Breakdown Sidebar Panel -->
+          <div class="score-breakdown-card">
+            <div class="breakdown-title">
+              <span>Match Score Engine</span>
+              <span class="tag-chip lime" id="side-score-overall">92 / 100</span>
+            </div>
+
+            <div class="breakdown-list">
+              <div class="breakdown-row">
+                <div class="breakdown-label-row">
+                  <span>Color Compatibility</span>
+                  <div>
+                    <span id="score-val-color">95</span>
+                    <span class="breakdown-weight">(30%)</span>
+                  </div>
+                </div>
+                <div class="breakdown-bar-bg">
+                  <div class="breakdown-bar-fill bar-color" id="bar-color" style="width: 95%;"></div>
+                </div>
+              </div>
+
+              <div class="breakdown-row">
+                <div class="breakdown-label-row">
+                  <span>Style Compatibility</span>
+                  <div>
+                    <span id="score-val-style">92</span>
+                    <span class="breakdown-weight">(25%)</span>
+                  </div>
+                </div>
+                <div class="breakdown-bar-bg">
+                  <div class="breakdown-bar-fill bar-style" id="bar-style" style="width: 92%;"></div>
+                </div>
+              </div>
+
+              <div class="breakdown-row">
+                <div class="breakdown-label-row">
+                  <span>Category Compatibility</span>
+                  <div>
+                    <span id="score-val-cat">100</span>
+                    <span class="breakdown-weight">(20%)</span>
+                  </div>
+                </div>
+                <div class="breakdown-bar-bg">
+                  <div class="breakdown-bar-fill bar-cat" id="bar-cat" style="width: 100%;"></div>
+                </div>
+              </div>
+
+              <div class="breakdown-row">
+                <div class="breakdown-label-row">
+                  <span>Occasion Suitability</span>
+                  <div>
+                    <span id="score-val-occ">90</span>
+                    <span class="breakdown-weight">(15%)</span>
+                  </div>
+                </div>
+                <div class="breakdown-bar-bg">
+                  <div class="breakdown-bar-fill bar-occ" id="bar-occ" style="width: 90%;"></div>
+                </div>
+              </div>
+
+              <div class="breakdown-row">
+                <div class="breakdown-label-row">
+                  <span>Weather Suitability</span>
+                  <div>
+                    <span id="score-val-wea">85</span>
+                    <span class="breakdown-weight">(10%)</span>
+                  </div>
+                </div>
+                <div class="breakdown-bar-bg">
+                  <div class="breakdown-bar-fill bar-wea" id="bar-wea" style="width: 85%;"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="breakdown-explanation-box">
+              <strong>Rule-based Analysis:</strong> This outfit combines balanced neutral silhouettes with high style cohesion. Category structure is 100% complete (Top + Bottom + Footwear).
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- VIEW 4: OUTFIT REMIX (SIGNATURE FEATURE)   -->
+      <!-- ========================================== -->
+      <section class="page-view" id="view-remix">
+        <div class="section-header">
+          <div>
+            <span class="section-pretitle">The Remix Studio</span>
+            <h2 class="section-title">Outfit Remix</h2>
+            <p class="section-desc">Change one piece at a time to discover new variations of your favorite looks.</p>
+          </div>
+          <div style="display: flex; gap: 0.75rem;">
+            <button class="btn btn-secondary btn-sm" id="btn-remix-reset">
+              <span>Reset Original</span>
+            </button>
+            <button class="btn btn-lime btn-sm" id="btn-save-remix">
+              <span>Save As New Outfit</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="remix-container">
+          <div class="remix-banner">
+            <div>
+              <h3 id="remix-active-title" style="font-size: 1.3rem; margin-bottom: 0.25rem;">Remixing: Downtown Monochrome Uniform</h3>
+              <p style="font-size: 0.88rem; color: var(--text-secondary);">Click on any slot below to browse and swap alternative compatible pieces from your closet.</p>
+            </div>
+            <div class="match-score-pill" id="remix-live-score" style="font-size: 1rem; padding: 0.4rem 0.9rem;">
+              Score: 92%
+            </div>
+          </div>
+
+          <!-- Active Outfit Slot Grid -->
+          <div class="remix-slots-grid" id="remix-slots-container">
+            <!-- Dynamically populated with slots for Top, Bottom, Outerwear, Shoes, Accessory -->
+          </div>
+
+          <!-- Slot Alternative Choices Drawer -->
+          <div class="remix-alternatives-section" id="remix-alternatives-box">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <span class="section-pretitle" id="remix-alt-subtitle">Compatible Options</span>
+                <h3 id="remix-alt-heading" style="font-size: 1.35rem;">Choose a Replacement for Bottom</h3>
+              </div>
+              <span class="tag-chip lime" id="remix-alt-count">3 options available</span>
+            </div>
+
+            <div class="alternatives-grid" id="remix-alternatives-grid">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- VIEW 5: FORGOTTEN ITEMS (WEAR MORE)        -->
+      <!-- ========================================== -->
+      <section class="page-view" id="view-forgotten">
+        <div class="section-header">
+          <div>
+            <span class="section-pretitle">Revive Your Closet</span>
+            <h2 class="section-title">Forgotten Items</h2>
+            <p class="section-desc">Give forgotten clothes another chance. Items not worn in over 25 days or with low wear counts.</p>
+          </div>
+        </div>
+
+        <div class="forgotten-items-grid" id="forgotten-cards-grid">
+          <!-- Dynamically populated -->
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- VIEW 6: WEAR TRACKING & HISTORY            -->
+      <!-- ========================================== -->
+      <section class="page-view" id="view-history">
+        <div class="section-header">
+          <div>
+            <span class="section-pretitle">Rotation Tracker</span>
+            <h2 class="section-title">Wear History</h2>
+            <p class="section-desc">Track every time you wear an outfit. Build genuine wardrobe longevity.</p>
+          </div>
+          <button class="btn btn-secondary btn-sm" id="btn-log-manual-wear">
+            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+            <span>+ Log Today's Wear</span>
+          </button>
+        </div>
+
+        <div class="wear-log-timeline" id="wear-logs-timeline">
+          <!-- Dynamically populated -->
+        </div>
+      </section>
+
+      <!-- ========================================== -->
+      <!-- VIEW 7: CLOSET ANALYTICS                   -->
+      <!-- ========================================== -->
+      <section class="page-view" id="view-analytics">
+        <div class="section-header">
+          <div>
+            <span class="section-pretitle">Wardrobe Intelligence</span>
+            <h2 class="section-title">Closet Analytics</h2>
+            <p class="section-desc">Data-driven insights into your real wardrobe usage, style affinities, and color spectrum.</p>
+          </div>
+          <button class="btn btn-secondary btn-sm" id="btn-export-analytics">
+            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"/></svg>
+            <span>Export Report</span>
+          </button>
+        </div>
+
+        <div class="analytics-dashboard-grid">
+          <!-- Metric 1: Most Worn Champion -->
+          <div class="card analytics-card-span-6">
+            <span class="section-pretitle">Most Worn Piece</span>
+            <div style="display: flex; gap: 1.25rem; align-items: center; margin-top: 1rem;">
+              <img src="" alt="Most Worn" id="analytics-most-worn-img" style="width: 85px; height: 100px; border-radius: var(--radius-md); object-fit: cover;">
+              <div>
+                <h3 id="analytics-most-worn-name" style="font-size: 1.2rem; font-weight: 700;">Retro White Platform Sneakers</h3>
+                <div style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--accent-success); margin-top: 0.35rem;">
+                  <strong id="analytics-most-worn-count">22</strong> Total Wears
+                </div>
+                <span class="tag-chip accent" style="margin-top: 0.5rem;" id="analytics-most-worn-tag">Hero Essential</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Metric 2: Least Worn / Forgotten Champion -->
+          <div class="card analytics-card-span-6">
+            <span class="section-pretitle">Least Worn Piece</span>
+            <div style="display: flex; gap: 1.25rem; align-items: center; margin-top: 1rem;">
+              <img src="" alt="Least Worn" id="analytics-least-worn-img" style="width: 85px; height: 100px; border-radius: var(--radius-md); object-fit: cover;">
+              <div>
+                <h3 id="analytics-least-worn-name" style="font-size: 1.2rem; font-weight: 700;">Caramel Brown Suede Overshirt</h3>
+                <div style="font-family: var(--font-mono); font-size: 0.9rem; color: var(--accent-danger); margin-top: 0.35rem;">
+                  <strong id="analytics-least-worn-count">1</strong> Wear • <span id="analytics-least-worn-days">42 days dormant</span>
+                </div>
+                <button class="btn btn-lime btn-sm" style="margin-top: 0.5rem;" id="analytics-revive-btn">
+                  <span>Resurrect This Piece</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Chart: Category Breakdown -->
+          <div class="card analytics-card-span-8">
+            <span class="section-pretitle">Wardrobe Composition</span>
+            <h3 style="font-size: 1.25rem; margin-top: 0.25rem;">Clothing by Category</h3>
+            <div class="chart-bar-container" id="analytics-category-bars">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- Gauge: Wardrobe Utilization -->
+          <div class="card analytics-card-span-4" style="display: flex; flex-direction: column; justify-content: center; text-align: center;">
+            <span class="section-pretitle">Wardrobe Efficiency</span>
+            <h3 style="font-size: 1.25rem; margin-top: 0.25rem;">Active Utilization</h3>
+            <div class="utilization-ring-wrapper">
+              <svg width="150" height="150" viewBox="0 0 100 100">
+                <circle cx="50" cy="50" r="42" stroke="rgba(255,255,255,0.08)" stroke-width="9" fill="none"/>
+                <circle id="utilization-svg-ring" cx="50" cy="50" r="42" stroke="var(--accent-secondary)" stroke-width="9" fill="none"
+                        stroke-dasharray="264" stroke-dashoffset="75" stroke-linecap="round"
+                        transform="rotate(-90 50 50)" style="transition: stroke-dashoffset 1s ease;"/>
+              </svg>
+              <div class="utilization-center-stat">
+                <span class="utilization-center-val" id="analytics-utilization-pct">71%</span>
+                <span class="utilization-center-lbl">Utilized</span>
+              </div>
+            </div>
+            <p style="font-size: 0.82rem; color: var(--text-muted);">Percentage of your wardrobe worn at least once in the past 30 days.</p>
+          </div>
+
+          <!-- Color Spectrum Palette -->
+          <div class="card analytics-card-span-6">
+            <span class="section-pretitle">Color Spectrum</span>
+            <h3 style="font-size: 1.25rem; margin-top: 0.25rem;">Wardrobe Palette</h3>
+            <div class="color-dots-palette" id="analytics-color-dots">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+
+          <!-- Style Distribution -->
+          <div class="card analytics-card-span-6">
+            <span class="section-pretitle">Style Identity</span>
+            <h3 style="font-size: 1.25rem; margin-top: 0.25rem;">Style Breakdown</h3>
+            <div class="chart-bar-container" id="analytics-style-bars">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: ADD / EDIT CLOTHING ITEM            -->
+  <!-- ========================================== -->
+  <div class="modal-backdrop" id="modal-add-item">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 style="font-size: 1.3rem; font-weight: 700;" id="modal-item-title">Add Clothing Item</h3>
+        <button class="modal-close-btn" id="btn-close-modal-item">✕</button>
+      </div>
+      <div class="modal-body">
+        <form id="form-clothing-item">
+          <input type="hidden" id="item-form-id">
+          
+          <div class="form-group">
+            <label class="form-label" for="item-form-name">Item Name</label>
+            <input type="text" class="form-input" id="item-form-name" placeholder="e.g. Raw Indigo Denim Jacket" required>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label class="form-label" for="item-form-cat">Category</label>
+              <select class="form-select" id="item-form-cat" required>
+                <option value="Top">Top</option>
+                <option value="Bottom">Bottom</option>
+                <option value="Outerwear">Outerwear</option>
+                <option value="Shoes">Shoes</option>
+                <option value="Accessory">Accessory</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="item-form-color">Color</label>
+              <select class="form-select" id="item-form-color" required>
+                <option value="Black">Black</option>
+                <option value="White">White</option>
+                <option value="Blue">Blue</option>
+                <option value="Beige">Beige</option>
+                <option value="Olive">Olive</option>
+                <option value="Gray">Gray</option>
+                <option value="Brown">Brown</option>
+                <option value="Green">Green</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+            <div class="form-group">
+              <label class="form-label" for="item-form-style">Style</label>
+              <select class="form-select" id="item-form-style" required>
+                <option value="Streetwear">Streetwear</option>
+                <option value="Minimal">Minimal</option>
+                <option value="Casual">Casual</option>
+                <option value="Vintage">Vintage</option>
+                <option value="Y2K">Y2K</option>
+                <option value="Formal">Formal</option>
+                <option value="Sport">Sport</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="item-form-season">Season</label>
+              <select class="form-select" id="item-form-season" required>
+                <option value="All Season">All Season</option>
+                <option value="Summer">Summer</option>
+                <option value="Winter">Winter</option>
+                <option value="Spring/Fall">Spring/Fall</option>
+                <option value="Rainy">Rainy</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="item-form-img">Image URL</label>
+            <input type="url" class="form-input" id="item-form-img" placeholder="https://images.unsplash.com/..." required>
+            
+            <div style="margin-top: 0.75rem;">
+              <span style="font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono);">Quick Presets (Click to autofill):</span>
+              <div class="preset-pills-row">
+                <button type="button" class="preset-pill" data-preset="hoodie">Washed Hoodie</button>
+                <button type="button" class="preset-pill" data-preset="cargo">Black Cargo</button>
+                <button type="button" class="preset-pill" data-preset="leather">Leather Loafers</button>
+                <button type="button" class="preset-pill" data-preset="trench">Minimal Trench</button>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top: 2rem; display: flex; justify-content: flex-end; gap: 1rem;">
+            <button type="button" class="btn btn-secondary" id="btn-cancel-modal-item">Cancel</button>
+            <button type="submit" class="btn btn-primary" id="btn-submit-modal-item">Save to Closet</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================== -->
+  <!-- MODAL: USER PROFILE & RESET                -->
+  <!-- ========================================== -->
+  <div class="modal-backdrop" id="modal-user-profile">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 style="font-size: 1.3rem; font-weight: 700;">Account & Preferences</h3>
+        <button class="modal-close-btn" id="btn-close-modal-user">✕</button>
+      </div>
+      <div class="modal-body">
+        <div style="display: flex; gap: 1.5rem; align-items: center; margin-bottom: 1.5rem;">
+          <img src="" alt="Alex Morgan" id="modal-user-avatar" style="width: 70px; height: 70px; border-radius: var(--radius-full); object-fit: cover;">
+          <div>
+            <h4 id="modal-user-name" style="font-size: 1.25rem;">Alex Morgan</h4>
+            <p id="modal-user-email" style="font-size: 0.85rem; color: var(--text-muted);">alex.morgan@style4p.io</p>
+            <span class="tag-chip lime" style="margin-top: 0.35rem;">Pro Wardrobe Member</span>
+          </div>
+        </div>
+
+        <div style="background: var(--bg-card-elevated); padding: 1.25rem; border-radius: var(--radius-md); margin-bottom: 1.5rem; font-size: 0.9rem;">
+          <div style="font-weight: 600; margin-bottom: 0.5rem;">Style4P Core Philosophy:</div>
+          <p style="color: var(--text-secondary); line-height: 1.45;">
+            "You don't need more clothes. You need more ways to wear them." All data is stored locally in your active session.
+          </p>
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 0.75rem;">
+          <!-- Firebase Auth Controls -->
+          <button class="btn btn-primary" id="btn-firebase-google-login" style="display: flex; align-items: center; justify-content: center; gap: 0.75rem;">
+            <svg width="18" height="18" viewBox="0 0 24 24"><path fill="currentColor" d="M21.35 11.1h-9.17v2.98h5.27c-.23 1.25-.94 2.31-2 3.01v2.5h3.24c1.89-1.74 2.98-4.31 2.98-7.39 0-.71-.06-1.39-.18-2.1z"/><path fill="currentColor" d="M12.18 21c2.7 0 4.96-.89 6.62-2.42l-3.24-2.5c-.9.6-2.05.96-3.38.96-2.6 0-4.8-1.76-5.59-4.12H3.25v2.58C4.9 18.77 8.27 21 12.18 21z"/><path fill="currentColor" d="M6.59 12.92c-.2-.6-.31-1.24-.31-1.92s.11-1.32.31-1.92V6.5H3.25C2.58 7.84 2.2 9.38 2.2 11s.38 3.16 1.05 4.5l3.34-2.58z"/><path fill="currentColor" d="M12.18 4.96c1.47 0 2.79.51 3.82 1.5l2.87-2.87C17.13 2.05 14.88 1.2 12.18 1.2 8.27 1.2 4.9 3.43 3.25 6.5l3.34 2.58c.79-2.36 2.99-4.12 5.59-4.12z"/></svg>
+            <span id="btn-google-login-text">Sign in with Google</span>
+          </button>
+
+          <button class="btn btn-secondary" id="btn-firebase-logout" style="display: none; align-items: center; justify-content: center; gap: 0.75rem; border-color: rgba(244, 63, 94, 0.4); color: #ff758c;">
+            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+            <span>Sign Out</span>
+          </button>
+
+          <button class="btn btn-secondary" id="btn-reset-seed-data">
+            <svg width="18" height="18" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+            <span>Reset Demo to Curated Seed Data</span>
+          </button>
+
+          <div id="firebase-sync-status" style="font-size: 0.8rem; color: var(--text-muted); text-align: center; margin-top: 0.5rem;">
+            ⚡ Firebase Cloud: Connected
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="seed-data.js"></script>
+  <script src="matching-engine.js"></script>
+  <script type="module" src="firebase-config.js"></script>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
